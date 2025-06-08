@@ -5,18 +5,22 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checar código
-        uses: actions/checkout@v3
+      - name: Checkout do código
+        uses: actions/checkout@v4
 
-      - name: Verificar se index.html existe
-        run: test -f public/index.html
+      - name: Instalar dependências (se necessário)
+        run: echo "Nenhuma dependência necessária para HTML/CSS/JS puro"
 
-      - name: Deploy para GitHub Pages
+      - name: Deploy com peaceiris/actions-gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: ./public
