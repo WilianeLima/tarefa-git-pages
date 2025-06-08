@@ -5,23 +5,22 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout do código
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Verifica se index.html existe
-        run: |
-          if [ ! -f public/index.html ]; then
-            echo "Erro: public/index.html não encontrado"
-            exit 1
-          fi
+      - name: Instalar dependências (se necessário)
+        run: echo "Nenhuma dependência necessária para HTML/CSS/JS puro"
 
-      - name: Deploy no GitHub Pages
+      - name: Deploy com peaceiris/actions-gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: ./public
